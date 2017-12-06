@@ -7,13 +7,11 @@ import org.apache.kafka.common.security.auth.PrincipalBuilder;
 import javax.security.auth.x500.X500Principal;
 import java.security.Principal;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created by Thomas Hamm on 21.07.17.
  */
 public class CustomPrincipalBuilder implements PrincipalBuilder {
-    static Logger logger = Logger.getLogger(CustomPrincipalBuilder.class.getName());
 
     public void configure(Map<String, ?> map) { }
 
@@ -31,11 +29,8 @@ public class CustomPrincipalBuilder implements PrincipalBuilder {
                     throw new KafkaException("failed to build principal");
                 }
 
-                logger.info("built principal " + newPrincipal.toString());
-
                 return newPrincipal;
             } else {
-                logger.info("skipping CustomPrincipalBuilder, detected user ANONYMOUS or non SSL principal");
                 return transportLayer.peerPrincipal();
             }
         } catch (Exception e) {
